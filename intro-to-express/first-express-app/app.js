@@ -1,1 +1,2 @@
-console.log("our express app will go here!");
+const express = require("express");
+const app = express();
