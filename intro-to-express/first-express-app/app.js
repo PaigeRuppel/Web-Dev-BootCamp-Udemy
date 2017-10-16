@@ -14,7 +14,17 @@ app.get("/bye", function(req, res){
 // "/dog" => "Meow"
 app.get("/dog", function(req, res){
 	res.send("MEOW");
+});
+
+// route parameters - denoted by a colon
+app.get("/r/:subredditName", function(req, res){
+	var name = req.params.subredditName;
+	res.send("Welcome to the " + name.toUpperCase() + " page");
 })
+
+app.get("/r/:subredditName/comments/:id/:title/", function(req, res) {
+	res.send("this is a comments page");
+});
 
 // catch-all route - especially useful when you want to have a custom error page display
 // order is important - this should be last or it will effectively override any other routes you have defined
