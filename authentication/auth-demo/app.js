@@ -40,10 +40,8 @@ app.get("/", function(req, res) {
 	res.render("home");
 });
 
-app.get("/secret", function(req, res){
-	res.render("secret");
-});
 
+//********************************************
 //============================================
 //AUTH ROUTES
 //============================================
@@ -86,11 +84,6 @@ app.post("/login", passport.authenticate("local", {
 
 });
 
-var port = process.env.PORT || 3000;
-app.listen(port, function(){
-	console.log("server started!");
-});
-
 //===========================================
 //LOGOUT ROUTES
 //===========================================
@@ -98,4 +91,29 @@ app.listen(port, function(){
 app.get("/logout", function(req, res) {
 	req.logout();
 	res.redirect("/");
+});
+
+
+
+//=============================================
+//SECRET ROUTE WITH AUTHENTICATION
+//=============================================
+
+app.get("/secret", isLoggedIn, function(req, res){
+	res.render("secret");
+});
+
+
+function isLoggedIn(req, res, next){
+	if (req.isAuthenticated()) {
+		return next();
+	} 
+	res.redirect("/login");
+}
+
+
+
+var port = process.env.PORT || 3000;
+app.listen(port, function(){
+	console.log("server started!");
 });
